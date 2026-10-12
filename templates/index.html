@@ -32,5 +32,23 @@
         </div>
         <button type="submit">Log Session</button>
     </form>
+
+
+    <table>
+        <thead>
+            <th>No.</th>
+            <th>Session Name</th>
+            <th>Session Duration</th>
+        </thead>
+        <tbody>
+            {% for session in sessions %}
+            <tr>
+                <td>{{ session.id }}</td>
+                <td>{{session.title}}</td>
+                <td>{{session.duration}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </body>
 </html>
