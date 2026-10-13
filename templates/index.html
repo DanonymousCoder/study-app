@@ -10,14 +10,39 @@
 <body>
     <aside>
         <ul>
-            <li>Home/Dashboard</li>
-            <li>Log Session</li>
+            <li><a href="#home">Home/Dashboard</a></li>
+            <li><a href="#log-session">Log Session</a></li>
         </ul>
     </aside>
     <main>
-        <h1>Welcome to my Study App</h1>
+        <section class="home-page" id="home">
+            <h1>Welcome to my Study App</h1>
 
-        <form action="/add" method="POST" class="log-session">
+            <table class="displayed-sessions">
+                <thead>
+                    <th>No.</th>
+                    <th>Session Name</th>
+                    <th>Session Duration</th>
+                    <th>Action</th>
+                </thead>
+                <tbody>
+                    {% for session in sessions %}
+                    <tr>
+                        <td>{{ session.id }}</td>
+                        <td>{{session.title}}</td>
+                        <td>{{session.duration}}</td>
+                        <td>
+                            <form action="/delete/{{session.id}}" method="POST">
+                                <button type="submit">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+
+        <form action="/add" method="POST" class="log-session" id="log-session">
             <div class="session-title">
                 <label for="title">Title: </label>
                 <input type="text" name="title" id="title" placeholder="Mathematics">
@@ -43,30 +68,6 @@
             </div>
             <button type="submit">Log Session</button>
         </form>
-
-
-        <table class="displayed-sessions">
-            <thead>
-                <th>No.</th>
-                <th>Session Name</th>
-                <th>Session Duration</th>
-                <th>Delete</th>
-            </thead>
-            <tbody>
-                {% for session in sessions %}
-                <tr>
-                    <td>{{ session.id }}</td>
-                    <td>{{session.title}}</td>
-                    <td>{{session.duration}}</td>
-                    <td>
-                        <form action="/delete/{{session.id}}" method="POST">
-                            <button type="submit">Delete</button>
-                        </form>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
     </main>
 </body>
 </html>
