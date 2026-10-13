@@ -43,4 +43,7 @@ def delete_session(session_id):
 
         delete_query = "DELETE FROM sessions WHERE id = ?"
 
-        cursor.execute(delete_query, session_id)
+        cursor.execute(delete_query, (session_id,))
+        connection.commit()
+
+    return redirect(url_for('home'))

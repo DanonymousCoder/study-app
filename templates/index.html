@@ -4,51 +4,69 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Study App</title>
+
+    <link rel="stylesheet" href="../static/styles.css">
 </head>
 <body>
-    <h1>Welcome to my Study App</h1>
+    <aside>
+        <ul>
+            <li>Home/Dashboard</li>
+            <li>Log Session</li>
+        </ul>
+    </aside>
+    <main>
+        <h1>Welcome to my Study App</h1>
 
-    <form action="/add" method="POST">
-        <div class="session-title">
-            <label for="title">Title: </label>
-            <input type="text" name="title" id="title" placeholder="Mathematics">
-        </div>
-        <div class="session-duration">
-            <label for="duration">Duration: </label>
-            <input type="number" name="duration" id="duration" placeholder="60">
-            <p>minutes</p>
-        </div>
-        <div class="session-date">
-            <label for="date">Date: </label>
-            <input type="date" name="date" id="date">
-        </div>
-        <div class="session-time">
-            <label for="time">Time: </label>
-            <input type="time" name="time" id="time">
-        </div>
-        <div class="session-notes">
-            <label for="notes">Session Notes: </label>
-            <textarea name="notes" id="notes"></textarea>
-        </div>
-        <button type="submit">Log Session</button>
-    </form>
+        <form action="/add" method="POST" class="log-session">
+            <div class="session-title">
+                <label for="title">Title: </label>
+                <input type="text" name="title" id="title" placeholder="Mathematics">
+            </div>
+            <div class="session-duration">
+                <label for="duration">Duration: </label>
+                <div class="bottom">
+                    <input type="number" name="duration" id="duration" placeholder="60">
+                    <p>minutes</p>
+                </div>
+            </div>
+            <div class="session-date">
+                <label for="date">Date: </label>
+                <input type="date" name="date" id="date">
+            </div>
+            <div class="session-time">
+                <label for="time">Time: </label>
+                <input type="time" name="time" id="time">
+            </div>
+            <div class="session-notes">
+                <label for="notes">Session Notes: </label>
+                <textarea name="notes" id="notes"></textarea>
+            </div>
+            <button type="submit">Log Session</button>
+        </form>
 
 
-    <table>
-        <thead>
-            <th>No.</th>
-            <th>Session Name</th>
-            <th>Session Duration</th>
-        </thead>
-        <tbody>
-            {% for session in sessions %}
-            <tr>
-                <td>{{ session.id }}</td>
-                <td>{{session.title}}</td>
-                <td>{{session.duration}}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+        <table class="displayed-sessions">
+            <thead>
+                <th>No.</th>
+                <th>Session Name</th>
+                <th>Session Duration</th>
+                <th>Delete</th>
+            </thead>
+            <tbody>
+                {% for session in sessions %}
+                <tr>
+                    <td>{{ session.id }}</td>
+                    <td>{{session.title}}</td>
+                    <td>{{session.duration}}</td>
+                    <td>
+                        <form action="/delete/{{session.id}}" method="POST">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </main>
 </body>
 </html>
