@@ -10,19 +10,25 @@
 <body>
     <aside>
         <ul>
-            <li><a href="#home">Home/Dashboard</a></li>
-            <li><a href="#log-session">Log Session</a></li>
+            <li><a href="#" id="home-btn">Activity Dashboard</a></li>
+            <li><a href="#" id="log-session-btn">Log Session</a></li>
         </ul>
     </aside>
     <main>
         <section class="home-page" id="home">
             <h1>Welcome to my Study App</h1>
 
+            <div class="study-analysis">
+                <p>Total logged hours: <span>{{total_duration}}</span></p>
+            </div>
+
             <table class="displayed-sessions">
                 <thead>
                     <th>No.</th>
                     <th>Session Name</th>
-                    <th>Session Duration</th>
+                    <th>Date</th>
+                    <th>Duration</th>
+                    <th>Notes</th>
                     <th>Action</th>
                 </thead>
                 <tbody>
@@ -30,7 +36,9 @@
                     <tr>
                         <td>{{ session.id }}</td>
                         <td>{{session.title}}</td>
+                        <td>{{session.s_date}}</td>
                         <td>{{session.duration}}</td>
+                        <td>{{session.notes}}</td>
                         <td>
                             <form action="/delete/{{session.id}}" method="POST">
                                 <button type="submit">Delete</button>
@@ -42,32 +50,54 @@
             </table>
         </section>
 
-        <form action="/add" method="POST" class="log-session" id="log-session">
-            <div class="session-title">
-                <label for="title">Title: </label>
-                <input type="text" name="title" id="title" placeholder="Mathematics">
-            </div>
-            <div class="session-duration">
-                <label for="duration">Duration: </label>
-                <div class="bottom">
-                    <input type="number" name="duration" id="duration" placeholder="60">
-                    <p>minutes</p>
+        <section class="log-section" id="log-section">
+            <h1>Log a session</h1>
+            <form action="/add" method="POST" class="log-session" id="log-session">
+                <div class="session-title">
+                    <label for="title">Title: </label>
+                    <input type="text" name="title" id="title" placeholder="Mathematics">
                 </div>
-            </div>
-            <div class="session-date">
-                <label for="date">Date: </label>
-                <input type="date" name="date" id="date">
-            </div>
-            <div class="session-time">
-                <label for="time">Time: </label>
-                <input type="time" name="time" id="time">
-            </div>
-            <div class="session-notes">
-                <label for="notes">Session Notes: </label>
-                <textarea name="notes" id="notes"></textarea>
-            </div>
-            <button type="submit">Log Session</button>
-        </form>
+                <div class="session-duration">
+                    <label for="duration">Duration: </label>
+                    <div class="bottom">
+                        <input type="number" name="duration" id="duration" placeholder="60">
+                        <p>minutes</p>
+                    </div>
+                </div>
+                <div class="session-date">
+                    <label for="date">Date: </label>
+                    <input type="date" name="date" id="date">
+                </div>
+                <div class="session-time">
+                    <label for="time">Time: </label>
+                    <input type="time" name="time" id="time">
+                </div>
+                <div class="session-notes">
+                    <label for="notes">Session Notes: </label>
+                    <textarea name="notes" id="notes"></textarea>
+                </div>
+                <button type="submit">Log Session</button>
+            </form>
+        </section>
     </main>
+
+
+
+    <script>
+        const homeBtn = document.getElementById("home-btn")
+        const logSessionBtn = document.getElementById("log-session-btn")
+        const home = document.getElementById("home")
+        const logSession = document.getElementById("log-section")
+
+        homeBtn.addEventListener("click", () => {
+            logSession.style.display = "none"
+            home.style.display = "flex"
+        })
+
+        logSessionBtn.addEventListener("click", () => {
+            logSession.style.display = "flex"
+            home.style.display = "none"
+        })
+    </script>
 </body>
 </html>

@@ -13,8 +13,13 @@ def home():
         cursor.execute("SELECT * FROM sessions")
 
         rows = cursor.fetchall()
+
+        cursor.execute("SELECT SUM(duration) AS total_duration FROM sessions")
+        sum_row = cursor.fetchone()
+
+        total_duration = sum_row["total_duration"] if sum_row["total_duration"] else 0
     
-        return render_template("index.html", sessions=rows)
+        return render_template("index.html", sessions=rows, total_duration=total_duration)
 
 @app.route("/add", methods=["POST"])
 def add_session():
@@ -27,9 +32,9 @@ def add_session():
     with sqlite3.connect("focus.db") as connection:
         cursor = connection.cursor()
 
-        add_query = "INSERT INTO sessions (title, duration) VALUES (?, ?)"
+        add_query = "INSERT INTO sessions (title, s_date, duration, notes) VALUES (?, ?, ?, ?)"
         
-        cursor.execute(add_query, (session_title, session_duration))
+        cursor.execute(add_query, (session_title, session_date, session_duration, session_notes))
         connection.commit()
 
     return redirect(url_for('home'))

@@ -31,15 +31,19 @@ main {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: aqua;
 }
 
 .home-page {
     height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    padding: 3em 0;
+    gap: 2em;
+}
+
+.home-page table {
+    margin-top: 3em;
 }
 
 th {
@@ -50,6 +54,12 @@ th {
 
 td {
     padding: 1em 2em;
+}
+
+.log-section {
+    display: none;
+    flex-direction: column;
+    gap: 2em;
 }
 
 .log-session {
