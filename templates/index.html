@@ -5,6 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Study App</title>
 
+
+    <!-- 
+        Link to Boxicons icons
+    -->
+
+     <!-- Basic Icons -->
+    <link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
+    <!-- Filled Icons -->
+    <link href="https://cdn.boxicons.com/3.0.8/fonts/filled/boxicons-filled.min.css" rel="stylesheet">
+    <!-- Brand Icons -->
+    <link href="https://cdn.boxicons.com/3.0.8/fonts/brands/boxicons-brands.min.css" rel="stylesheet">
+
+
     <link rel="stylesheet" href="../static/styles.css">
 </head>
 <body>
@@ -22,32 +35,35 @@
                 <p>Total logged hours: <span>{{total_duration}}</span></p>
             </div>
 
-            <table class="displayed-sessions">
-                <thead>
-                    <th>No.</th>
-                    <th>Session Name</th>
-                    <th>Date</th>
-                    <th>Duration</th>
-                    <th>Notes</th>
-                    <th>Action</th>
-                </thead>
-                <tbody>
-                    {% for session in sessions %}
-                    <tr>
-                        <td>{{ session.id }}</td>
-                        <td>{{session.title}}</td>
-                        <td>{{session.s_date}}</td>
-                        <td>{{session.duration}}</td>
-                        <td>{{session.notes}}</td>
-                        <td>
-                            <form action="/delete/{{session.id}}" method="POST">
-                                <button type="submit">Delete</button>
-                            </form>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            <div class="logged-sessions">
+                <h3>Logged Sessions</h3>
+                <table class="displayed-sessions">
+                    <thead>
+                        <th>No.</th>
+                        <th>Session Name</th>
+                        <th>Date</th>
+                        <th>Duration</th>
+                        <th>Notes</th>
+                        <th>Action</th>
+                    </thead>
+                    <tbody>
+                        {% for session in sessions %}
+                        <tr>
+                            <td>{{ session.id }}</td>
+                            <td>{{session.title}}</td>
+                            <td>{{session.s_date}}</td>
+                            <td>{{session.duration}}</td>
+                            <td>{{session.notes}}</td>
+                            <td>
+                                <form action="/delete/{{session.id}}" method="POST">
+                                    <button type="submit"><i class="bx bx-trash" style="color: #94a3b8; font-size: 1.75em;"> </i></button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </section>
 
         <section class="log-section" id="log-section">

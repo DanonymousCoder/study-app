@@ -2,6 +2,7 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 
@@ -10,13 +11,15 @@ body{
     width: 100%;
     display: grid;
     grid-template-columns: 260px 1fr;
+    align-items: stretch;
     min-height: 100vh;
+    color: #94a3b8;
 }
 
 aside {
     border-right: 2px solid black;
     padding: 2em;
-    max-height: 100vh;
+    background-color: #0b1326;
 }
 
 aside ul {
@@ -31,6 +34,27 @@ main {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    background-color: #060e20;
+    height: 100vh;
+}
+
+a {
+    text-decoration: none;
+    color: #94a3b8;
+}
+
+h1 {
+    color: #f8fafc;
+}
+
+h3 {
+    color: #f8fafc;
+}
+
+.logged-sessions {
+    background-color: #0b1326;
+    padding: 2em;
+    border-radius: 15px;
 }
 
 .home-page {
@@ -42,24 +66,65 @@ main {
     gap: 2em;
 }
 
+.study-analysis {
+    background-color: #0b1326;
+    padding: 2em;
+    border-radius: 15px;
+}
+
 .home-page table {
     margin-top: 3em;
+}
+
+thead {
+    background-color: #131b2e;
+}
+
+thead th:first-child {
+    border-top-left-radius: 10px;
+}
+
+thead th:last-child {
+    border-top-right-radius: 10px;
 }
 
 th {
     padding: 1em 2em;
     text-align: left;
     border-bottom: 1px solid black;
+    color: #64748b;
+}
+
+tbody {
+    background-color: #131b2e;
 }
 
 td {
     padding: 1em 2em;
 }
 
+tbody tr td:nth-child(3),
+tbody tr td:nth-child(5) {
+    color: #64748b;
+}
+
+tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 10px;
+}
+
+tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 10px;
+}
+
 .log-section {
     display: none;
     flex-direction: column;
     gap: 2em;
+}
+
+table button{
+    background-color: transparent;
+    border: none;
 }
 
 .log-session {
