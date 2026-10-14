@@ -28,6 +28,16 @@
         </ul>
     </aside>
     <main>
+
+        {% set successes = get_flashed_messages(category_filter=["success"]) %}
+        {% if successes %}
+        <div class="alert-div">
+            {% for success in successes %}
+            <p class="alert-text">{{success}}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+
         <section class="home-page" id="home">
             <h1>Welcome to my Study App</h1>
 

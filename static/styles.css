@@ -36,6 +36,19 @@ main {
     justify-content: center;
     background-color: #060e20;
     height: 100vh;
+    position: relative;
+}
+
+.alert-div {
+    position: absolute;
+    top: 0;
+    height: 100px;
+    background-color: black;
+    padding: 2em;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 a {
@@ -120,6 +133,10 @@ tbody tr:last-child td:last-child {
     display: none;
     flex-direction: column;
     gap: 2em;
+    background-color: #0b1326;
+    margin: 2em 0;
+    border-radius: 15px;
+    padding: 3em;
 }
 
 table button{
@@ -136,7 +153,7 @@ table button{
 }
 
 h1 {
-    text-align: center;
+    text-align: left;
 }
 
 .log-session label {
@@ -145,17 +162,25 @@ h1 {
 
 .log-session input {
     width: 500px;
-    padding: 1em;
+    padding: 1.2em;
+    border-radius: 8px;
+    border: none;
 }
 
 .log-session textarea {
     width: 500px;
     padding: 1em;
+    border-radius: 10px;
+    border: none;
 }
 
-.log-session button {
+.log-section button {
     width: 500px;
     padding: 1em;
+    color: #060e20;
+    background-color: #c7d2fe;
+    border-radius: 10px;
+    border: none;
 }
 
 .session-title,

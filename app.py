@@ -1,7 +1,13 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 import sqlite3
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
+
+app.secret_key = os.environ.get('MY_SECRET_KEY')
 
 @app.route("/")
 def home():
@@ -37,6 +43,7 @@ def add_session():
         cursor.execute(add_query, (session_title, session_date, session_duration, session_notes))
         connection.commit()
 
+    flash("Session added successfully", "success")
     return redirect(url_for('home'))
     #return f"Worked on {session_title} on this date: {session_date} at {session_time} for {session_duration}. Details: {session_notes}"
 
@@ -51,4 +58,5 @@ def delete_session(session_id):
         cursor.execute(delete_query, (session_id,))
         connection.commit()
 
+    flash("Session deleted sucessfully", "success")
     return redirect(url_for('home'))
