@@ -12,3 +12,7 @@ with sqlite3.connect("focus.db") as connection:
             notes TEXT NOT NULL
             )
     """)
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS study_goal ()
+""")

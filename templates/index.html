@@ -25,6 +25,7 @@
         <ul>
             <li><a href="#" id="home-btn">Activity Dashboard</a></li>
             <li><a href="#" id="log-session-btn">Log Session</a></li>
+            <li><a href="#" id="goals-page-btn">Study goals</a></li>
         </ul>
     </aside>
     <main>
@@ -113,6 +114,25 @@
                 <button type="submit">Log Session</button>
             </form>
         </section>
+
+        <section class="study-goals" id="goals-page">
+            <h1>Study goals</h1>
+
+            <div class="progress-card">
+                <h5>Daily Study Goal</h5>
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+
+            <form action="" method="POST">
+                <div>
+                    <label for="">Select goal duration type</label>
+                    <select name="goal-duration" id="goal-duration">
+                        <option value="daily">Daily</option>
+                        <option value="weekly">Weekly</option>
+                    </select>
+                </div>
+            </form>
+        </section>
     </main>
 
 
@@ -120,17 +140,26 @@
     <script>
         const homeBtn = document.getElementById("home-btn")
         const logSessionBtn = document.getElementById("log-session-btn")
+        const goalsPageBtn = document.getElementById("goals-page-btn")
         const home = document.getElementById("home")
         const logSession = document.getElementById("log-section")
 
         homeBtn.addEventListener("click", () => {
             logSession.style.display = "none"
+            goalsPageBtn.style.display = "none"
             home.style.display = "flex"
         })
 
         logSessionBtn.addEventListener("click", () => {
             logSession.style.display = "flex"
             home.style.display = "none"
+            goalsPageBtn.style.display = "none"
+        })
+
+        goalsPageBtn.addEventListener("click",  () => {
+            logSession.style.display = "none"
+            home.style.display ="none"
+            goalsPageBtn.style.display = "flex"
         })
     </script>
 </body>

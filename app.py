@@ -25,8 +25,17 @@ def home():
         sum_row = cursor.fetchone()
 
         total_duration = sum_row["total_duration"] if sum_row["total_duration"] else 0
+
+        today_date = datetime.now().strftime("%H:%M")
+        cursor.execute("SELECT SUM(duration) AS daily_total_duration FROM sessions WHERE s_date = ?", (today_date,))
+        daily_sum_row= cursor.fetchone()
+
+        total_daily_duration = daily_sum_row["daily_total_duration"] if daily_sum_row["daily_total_duration"] else 0
+
+        # calculated hours / inputted hours
+        # c/i * 100
     
-        return render_template("index.html", sessions=rows, total_duration=total_duration)
+        return render_template("index.html", sessions=rows, total_duration=total_duration )
 
 @app.route("/add", methods=["POST"])
 def add_session():
@@ -70,3 +79,7 @@ def delete_session(session_id):
 
     flash("Session deleted sucessfully", "error")
     return redirect(url_for('home'))
+
+@app.route('/study/add', methods=['POST'])
+def add_goal():
+    pass
