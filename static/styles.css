@@ -10,7 +10,7 @@
 body{
     width: 100%;
     display: grid;
-    grid-template-columns: 260px 1fr;
+    grid-template-columns: 400px 1fr;
     align-items: stretch;
     min-height: 100vh;
     color: #94a3b8;
@@ -18,7 +18,7 @@ body{
 
 aside {
     border-right: 2px solid black;
-    padding: 2em;
+    padding: 7em 3em;
     background-color: #0b1326;
 }
 
@@ -26,8 +26,12 @@ aside ul {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 1em;
+    gap: 2em;
 }
+
+aside ul a {
+    font-size: 1.5em;
+} 
 
 main {
     display: flex;
@@ -42,8 +46,12 @@ main {
 .alert-div {
     position: absolute;
     top: 0;
+    margin-top: 2.5em;
     height: 100px;
-    background-color: black;
+    background-color: #131b2e;
+    color: #ffffff;
+    border: 1px solid #1e293b;
+    border-radius: 10px;
     padding: 2em;
     text-align: center;
     display: flex;

@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 import sqlite3
 import os
 from dotenv import load_dotenv
+from datetime import date, datetime
 
 load_dotenv()
 
@@ -35,6 +36,15 @@ def add_session():
     session_time = request.form.get("time")
     session_notes = request.form.get("notes")
 
+    # if session_duration == "":
+
+    if session_date == "":
+        session_date = date.today().isoformat()
+
+    if session_time == "":
+        now = datetime.now()
+        session_time = now.strftime("%H:%M")
+
     with sqlite3.connect("focus.db") as connection:
         cursor = connection.cursor()
 
@@ -58,5 +68,5 @@ def delete_session(session_id):
         cursor.execute(delete_query, (session_id,))
         connection.commit()
 
-    flash("Session deleted sucessfully", "success")
+    flash("Session deleted sucessfully", "error")
     return redirect(url_for('home'))

@@ -29,10 +29,20 @@
     </aside>
     <main>
 
-        {% set successes = get_flashed_messages(category_filter=["success"]) %}
+     {% set successes = get_flashed_messages(category_filter=["success"]) %}
         {% if successes %}
-        <div class="alert-div">
+        <div class="alert-div alert alert-admissible" role="alert">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             {% for success in successes %}
+            <p class="alert-text">{{success}}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% set errors = get_flashed_messages(category_filter=["error"]) %}
+        {% if errors %}
+        <div class="alert-div alert alert-admissible" role="alert">
+            {% for success in errors %}
             <p class="alert-text">{{success}}</p>
             {% endfor %}
         </div>
@@ -49,7 +59,6 @@
                 <h3>Logged Sessions</h3>
                 <table class="displayed-sessions">
                     <thead>
-                        <th>No.</th>
                         <th>Session Name</th>
                         <th>Date</th>
                         <th>Duration</th>
@@ -59,7 +68,6 @@
                     <tbody>
                         {% for session in sessions %}
                         <tr>
-                            <td>{{ session.id }}</td>
                             <td>{{session.title}}</td>
                             <td>{{session.s_date}}</td>
                             <td>{{session.duration}}</td>
@@ -86,7 +94,7 @@
                 <div class="session-duration">
                     <label for="duration">Duration: </label>
                     <div class="bottom">
-                        <input type="number" name="duration" id="duration" placeholder="60">
+                        <input type="number" name="duration" id="duration" min="1" placeholder="60">
                         <p>minutes</p>
                     </div>
                 </div>
