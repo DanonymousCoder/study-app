@@ -90,6 +90,18 @@ def delete_session(session_id):
     flash("Session deleted sucessfully", "error")
     return redirect(url_for('home'))
 
-@app.route('/study/add', methods=['POST'])
-def add_goal():
-    pass
+@app.route('/set_goal', methods=['POST'])
+def set_goal():
+    type_of_goal = request.form.get("goal-duration")
+    goal_value = request.form.get("goal-number")
+
+    with sqlite3.connect("focus.db") as connection:
+        cursor = connection.cursor()
+
+        if type_of_goal == "daily":
+            add_query = "INSERT INTO study_goal (daily_goal) VALUE ?"
+        else:
+            add_query = "INSERT INTO study_goal (weekly_goal) VALUE ?"
+
+        cursor.execute(add_query, (goal_value,))
+    return redirect(request.referrer or url_for("home"))

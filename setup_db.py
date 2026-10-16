@@ -14,5 +14,11 @@ with sqlite3.connect("focus.db") as connection:
     """)
 
     cursor.execute("""
-        CREATE TABLE IF NOT EXISTS study_goal ()
+        CREATE TABLE IF NOT EXISTS study_goal (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            daily_goal INTEGER,
+            weekly_goal INTEGER
+        )
 """)
+
+    cursor.execute("INSERT OR IGNORE INTO study_goal (id, daily_goal, weekly_goal) VALUES (1, 100, 500)")
