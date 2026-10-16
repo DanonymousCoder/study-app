@@ -54,6 +54,13 @@
 
             <div class="study-analysis">
                 <p>Total logged hours: <span>{{total_duration}}</span></p>
+
+                <div class="daily-goal">
+                    <h5>Daily Goal</h5>
+                    <div class="progress-bar">
+                        <div class="progress-bar-filler"></div>
+                    </div>
+                </div>
             </div>
 
             <div class="logged-sessions">
@@ -124,12 +131,17 @@
             </div>
 
             <form action="" method="POST">
-                <div>
-                    <label for="">Select goal duration type</label>
+                <div class="goal-section">
+                    <label for="">Select goal duration type:</label>
                     <select name="goal-duration" id="goal-duration">
                         <option value="daily">Daily</option>
                         <option value="weekly">Weekly</option>
                     </select>
+                </div>
+
+                <div class="goal-number">
+                    <label for="goal-number">Goal:</label>
+                    <input type="number" min="1" name="goal-number" id="goal-number" placeholder="100(in minutes)" required>
                 </div>
             </form>
         </section>
@@ -141,25 +153,30 @@
         const homeBtn = document.getElementById("home-btn")
         const logSessionBtn = document.getElementById("log-session-btn")
         const goalsPageBtn = document.getElementById("goals-page-btn")
+
         const home = document.getElementById("home")
         const logSession = document.getElementById("log-section")
+        const goalsPage = document.getElementById("goals-page")
+
+
+        document.querySelector(".progress-bar-filler").display.width = widthValue
 
         homeBtn.addEventListener("click", () => {
             logSession.style.display = "none"
-            goalsPageBtn.style.display = "none"
+            goalsPage.style.display = "none"
             home.style.display = "flex"
         })
 
         logSessionBtn.addEventListener("click", () => {
             logSession.style.display = "flex"
             home.style.display = "none"
-            goalsPageBtn.style.display = "none"
+            goalsPage.style.display = "none"
         })
 
         goalsPageBtn.addEventListener("click",  () => {
             logSession.style.display = "none"
             home.style.display ="none"
-            goalsPageBtn.style.display = "flex"
+            goalsPage.style.display = "flex"
         })
     </script>
 </body>

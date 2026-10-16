@@ -10,8 +10,12 @@ app = Flask(__name__)
 
 app.secret_key = os.environ.get('MY_SECRET_KEY')
 
+fillWidth = 0
+
 @app.route("/")
 def home():
+
+    target_hours = 100
 
     with sqlite3.connect("focus.db") as connection:
         connection.row_factory = sqlite3.Row
@@ -30,12 +34,18 @@ def home():
         cursor.execute("SELECT SUM(duration) AS daily_total_duration FROM sessions WHERE s_date = ?", (today_date,))
         daily_sum_row= cursor.fetchone()
 
+
         total_daily_duration = daily_sum_row["daily_total_duration"] if daily_sum_row["daily_total_duration"] else 0
 
         # calculated hours / inputted hours
         # c/i * 100
+        
+        if target_hours and total_daily_duration:
+            fillWidth = target_hours / total_daily_duration * 100
+        else:
+            fillWidth = 0
     
-        return render_template("index.html", sessions=rows, total_duration=total_duration )
+        return render_template("index.html", sessions=rows, total_duration=total_duration, widthValue=fillWidth)
 
 @app.route("/add", methods=["POST"])
 def add_session():

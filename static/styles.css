@@ -93,6 +93,26 @@ h3 {
     border-radius: 15px;
 }
 
+.study-analysis .daily-goal {
+    height: 50px;
+    width: 500px;
+    background-color: white;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 10px;
+    border-radius: 10px;
+    background-color: yellow;
+}
+
+.progress-bar-filler {
+    width: 20%;
+    background-color: green;
+    height: 100%;
+    border-radius: 10px;
+}
+
 .home-page table {
     margin-top: 3em;
 }
@@ -177,7 +197,7 @@ h1 {
 
 .log-session textarea {
     width: 500px;
-    padding: 1em;
+    padding: 1.2em;
     border-radius: 10px;
     border: none;
 }
@@ -209,4 +229,38 @@ h1 {
 
 .log-session .session-duration input {
     width: 430px;
+}
+
+
+.study-goals {
+    display: none;
+    flex-direction: column;
+}
+
+.study-goals form {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    background-color: #0b1326;
+    padding: 3em;
+}
+
+.study-goals .goal-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.study-goals .goal-number {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    margin-top: 3em;
+}
+
+.study-goal form input,
+.study-goal form select {
+    width: 500px;
+    border: 10px;
+    padding: 1.2em;
 }
