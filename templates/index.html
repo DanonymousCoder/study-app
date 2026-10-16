@@ -60,7 +60,7 @@
                 <div class="daily-goal">
                     <h5>Daily Goal</h5>
                     <div class="progress-bar">
-                        <div class="progress-bar-filler"></div>
+                        <div class="progress-bar-filler" style="--width-value: {{widthValue}}"></div>
                     </div>
                 </div>
             </div>
@@ -162,8 +162,8 @@
         const logSession = document.getElementById("log-section")
         const goalsPage = document.getElementById("goals-page")
 
-
-        // document.querySelector(".progress-bar-filler").display.width = widthValue + "%"
+        // Apparently this was the bug preventing this feature from workin
+        document.querySelector(".progress-bar-filler").style.width = "{{widthValue}}%"
 
         homeBtn.addEventListener("click", () => {
             logSession.style.display = "none"

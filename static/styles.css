@@ -118,6 +118,7 @@ h3 {
 
 .progress-bar {
     width: 100%;
+    max-width: 700px;
     height: 10px;
     border-radius: 10px;
     background-color: yellow;
@@ -126,7 +127,27 @@ h3 {
 .progress-bar-filler {
     background-color: green;
     height: 100%;
+    max-width: 100%;
     border-radius: 10px;
+    animation: move 2s ease-out forwards;
+}
+
+@keyframes move {
+    0% {
+        width: 0%;
+    }
+
+    25% {
+        width: calc((var(--width-value) / 4) * 1%);
+    }
+
+    50% {
+        width: calc((var(--width-value) / 2) * 1%);
+    }
+
+    100% {
+        width: calc(var(--width-value) * 1%);
+    }
 }
 
 .home-page table {
