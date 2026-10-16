@@ -57,6 +57,11 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 1em;
+}
+
+.alert-div button {
+    transform: scale(1.5);
 }
 
 a {
@@ -91,12 +96,24 @@ h3 {
     background-color: #0b1326;
     padding: 2em;
     border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
 }
 
 .study-analysis .daily-goal {
-    height: 50px;
-    width: 500px;
+    width: 700px;
     background-color: white;
+    padding: 2em;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.daily-goal h5 {
+    font-size: 1.5em;
+    color: #060e20;
 }
 
 .progress-bar {
@@ -107,7 +124,6 @@ h3 {
 }
 
 .progress-bar-filler {
-    width: 20%;
     background-color: green;
     height: 100%;
     border-radius: 10px;
@@ -235,6 +251,13 @@ h1 {
 .study-goals {
     display: none;
     flex-direction: column;
+    gap: 3em;
+}
+
+.study-goals .progress-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
 }
 
 .study-goals form {
@@ -258,9 +281,19 @@ h1 {
     margin-top: 3em;
 }
 
-.study-goal form input,
-.study-goal form select {
+.study-goals form input,
+.study-goals form select {
     width: 500px;
-    border: 10px;
+    border-radius: 10px;
+    border: none;
     padding: 1.2em;
+}
+
+.study-goals button[type="submit"] {
+    background-color: #c7d2fe;
+    color: #060e20;
+    padding: .5em;
+    border-radius: 10px;
+    font-size: 1.2em;
+    margin-top: 2em;
 }

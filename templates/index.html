@@ -32,8 +32,9 @@
 
      {% set successes = get_flashed_messages(category_filter=["success"]) %}
         {% if successes %}
-        <div class="alert-div alert alert-admissible" role="alert">
+        <div class="alert-div alert alert-dismissible fade show alert-success" role="alert">
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
             {% for success in successes %}
             <p class="alert-text">{{success}}</p>
             {% endfor %}
@@ -42,7 +43,8 @@
 
         {% set errors = get_flashed_messages(category_filter=["error"]) %}
         {% if errors %}
-        <div class="alert-div alert alert-admissible" role="alert">
+        <div class="alert-div alert alert-dismissible fade show alert-success" role="alert">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             {% for success in errors %}
             <p class="alert-text">{{success}}</p>
             {% endfor %}
@@ -143,6 +145,8 @@
                     <label for="goal-number">Goal:</label>
                     <input type="number" min="1" name="goal-number" id="goal-number" placeholder="100(in minutes)" required>
                 </div>
+
+                <button type="submit">Set Goal</button>
             </form>
         </section>
     </main>
@@ -159,7 +163,7 @@
         const goalsPage = document.getElementById("goals-page")
 
 
-        document.querySelector(".progress-bar-filler").display.width = widthValue
+        // document.querySelector(".progress-bar-filler").display.width = widthValue + "%"
 
         homeBtn.addEventListener("click", () => {
             logSession.style.display = "none"

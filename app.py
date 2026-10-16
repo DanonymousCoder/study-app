@@ -30,7 +30,7 @@ def home():
 
         total_duration = sum_row["total_duration"] if sum_row["total_duration"] else 0
 
-        today_date = datetime.now().strftime("%H:%M")
+        today_date = date.today().isoformat()
         cursor.execute("SELECT SUM(duration) AS daily_total_duration FROM sessions WHERE s_date = ?", (today_date,))
         daily_sum_row= cursor.fetchone()
 
@@ -41,7 +41,7 @@ def home():
         # c/i * 100
         
         if target_hours and total_daily_duration:
-            fillWidth = target_hours / total_daily_duration * 100
+            fillWidth = (total_daily_duration / target_hours) * 100
         else:
             fillWidth = 0
     
