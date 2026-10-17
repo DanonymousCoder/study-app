@@ -57,10 +57,19 @@
             <div class="study-analysis">
                 <p>Total logged hours: <span>{{total_duration}}</span></p>
 
-                <div class="daily-goal">
-                    <h5>Daily Goal</h5>
-                    <div class="progress-bar">
-                        <div class="progress-bar-filler" style="--width-value: {{widthValue}}"></div>
+                <div class="bottom">
+                    <div class="daily-goal">
+                        <h5>Daily Goal</h5>
+                        <div class="progress-bar">
+                            <div class="progress-bar-filler" style="--daily-width-value: {{dailyWidthValue}}"></div>
+                        </div>
+                    </div>
+
+                    <div class="weekly-goal">
+                        <h5> Weekly Goal</h5>
+                        <div class="progress-bar">
+                            <div class="progress-bar-filler" style="--weekly-width-value: {{weeklyWidthValue}}"></div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -10,12 +10,11 @@ app = Flask(__name__)
 
 app.secret_key = os.environ.get('MY_SECRET_KEY')
 
-fillWidth = 0
+fillDailyWidth = 0
+fillWeeklyWidth = 0
 
 @app.route("/")
 def home():
-
-    target_hours = 100
 
     with sqlite3.connect("focus.db") as connection:
         connection.row_factory = sqlite3.Row
@@ -34,18 +33,35 @@ def home():
         cursor.execute("SELECT SUM(duration) AS daily_total_duration FROM sessions WHERE s_date = ?", (today_date,))
         daily_sum_row= cursor.fetchone()
 
+        cursor.execute("SELECT SUM(duration) AS weekly_total_duration FROM sessions WHERE s_date >= ? or s_date - 7 <= ?", (today_date,))
+        weekly_sum_row = cursor.fetchone()
 
         total_daily_duration = daily_sum_row["daily_total_duration"] if daily_sum_row["daily_total_duration"] else 0
+
+        total_weekly_duration = weekly_sum_row["weekly_total_duration"] if weekly_sum_row["weekly_total_duration"] else 0
+
+        # fetch_target_hours_query = "SELECT daily_goal FROM study_goal"
+        cursor.execute("SELECT daily_goal FROM study_goal")
+        target_daily_hours = cursor.fetchone()[0]
+
+        cursor.execute("SELECT weekly_goal FROM study_goal")
+        target_weekly_hours = cursor.fetchone()[0]
+
 
         # calculated hours / inputted hours
         # c/i * 100
         
-        if target_hours and total_daily_duration:
-            fillWidth = (total_daily_duration / target_hours) * 100
+        if target_daily_hours and total_daily_duration:
+            fillDailyWidth = (total_daily_duration / target_daily_hours) * 100
         else:
-            fillWidth = 0
+            fillDailyWidth = 0
+
+        if target_weekly_hours and total_weekly_duration:
+            fillWeeklyWidth = (total_weekly_duration / target_weekly_hours) * 100
+        else:
+            fillWeeklyWidth = 0
     
-        return render_template("index.html", sessions=rows, total_duration=total_duration, widthValue=fillWidth)
+        return render_template("index.html", sessions=rows, total_duration=total_duration, dailyWidthValue=fillDailyWidth, weeklyWidthValue=fillWeeklyWidth)
 
 @app.route("/add", methods=["POST"])
 def add_session():
@@ -99,9 +115,9 @@ def set_goal():
         cursor = connection.cursor()
 
         if type_of_goal == "daily":
-            add_query = "INSERT INTO study_goal (daily_goal) VALUE ?"
+            add_query = "UPDATE study_goal SET daily_goal = ? WHERE id = 1"
         else:
-            add_query = "INSERT INTO study_goal (weekly_goal) VALUE ?"
+            add_query = "UPDATE study_goal SET weekly_goal = ? WHERE id = 1"
 
         cursor.execute(add_query, (goal_value,))
     return redirect(request.referrer or url_for("home"))

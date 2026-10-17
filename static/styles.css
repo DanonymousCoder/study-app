@@ -99,10 +99,17 @@ h3 {
     display: flex;
     flex-direction: column;
     gap: 2em;
+    width: 900px;
+}
+
+.study-analysis .bottom {
+    display: flex;
+    width: 100%;
+    gap: 2em;
 }
 
 .study-analysis .daily-goal {
-    width: 700px;
+    width: 50%;
     background-color: white;
     padding: 2em;
     border-radius: 15px;
@@ -148,6 +155,22 @@ h3 {
     100% {
         width: calc(var(--width-value) * 1%);
     }
+}
+
+
+.study-analysis .weekly-goal {
+    width: 50%;
+    background-color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    padding: 2em;
+    border-radius: 15px;
+    gap: 1em;
+}
+
+.weekly-goal h5 {
+    color: #060e20;
+    font-size: 1.5em;
 }
 
 .home-page table {

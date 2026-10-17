@@ -15,7 +15,7 @@ with sqlite3.connect("focus.db") as connection:
 
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS study_goal (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id INTEGER PRIMARY KEY,
             daily_goal INTEGER,
             weekly_goal INTEGER
         )
