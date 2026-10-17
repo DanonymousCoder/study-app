@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 import sqlite3
 import os
 from dotenv import load_dotenv
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 
 load_dotenv()
 
@@ -33,7 +33,8 @@ def home():
         cursor.execute("SELECT SUM(duration) AS daily_total_duration FROM sessions WHERE s_date = ?", (today_date,))
         daily_sum_row= cursor.fetchone()
 
-        cursor.execute("SELECT SUM(duration) AS weekly_total_duration FROM sessions WHERE s_date >= ? or s_date - 7 <= ?", (today_date,))
+        seven_days_ago = (date.today() - timedelta(days=7)).strftime("%Y-%m-%d")
+        cursor.execute("SELECT SUM(duration) AS weekly_total_duration FROM sessions WHERE s_date >= ? or s_date - 7 <= ?", (seven_days_ago, today_date))
         weekly_sum_row = cursor.fetchone()
 
         total_daily_duration = daily_sum_row["daily_total_duration"] if daily_sum_row["daily_total_duration"] else 0

@@ -32,8 +32,8 @@
 
      {% set successes = get_flashed_messages(category_filter=["success"]) %}
         {% if successes %}
-        <div class="alert-div alert alert-dismissible fade show alert-success" role="alert">
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <div class="alert-div" role="alert">
+            <i class="bx bx-x close-btn" style="font-size: 1.5em; font-weight: bold;" data-bs-dismiss="alert" aria-label="Close"></i>
 
             {% for success in successes %}
             <p class="alert-text">{{success}}</p>
@@ -43,8 +43,8 @@
 
         {% set errors = get_flashed_messages(category_filter=["error"]) %}
         {% if errors %}
-        <div class="alert-div alert alert-dismissible fade show alert-success" role="alert">
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <div class="alert-div" role="alert">
+            <i class="bx bx-x close-btn" style="font-size: 1.5rem; font-weight: bold;" data-bs-dismiss="alert" aria-label="Close"></i>
             {% for success in errors %}
             <p class="alert-text">{{success}}</p>
             {% endfor %}
@@ -66,7 +66,7 @@
                     </div>
 
                     <div class="weekly-goal">
-                        <h5> Weekly Goal</h5>
+                        <h5> Weekly Goal(last 7days)</h5>
                         <div class="progress-bar">
                             <div class="progress-bar-filler" style="--weekly-width-value: {{weeklyWidthValue}}"></div>
                         </div>
@@ -170,6 +170,14 @@
         const home = document.getElementById("home")
         const logSession = document.getElementById("log-section")
         const goalsPage = document.getElementById("goals-page")
+
+        const closeBtns = document.querySelectorAll(".close-btn")
+
+        closeBtns.forEach(elem => {
+            elem.addEventListener("click", () => {
+                elem.closest(".alert-div").style.display = "none"
+            })
+        })
 
         // Apparently this was the bug preventing this feature from workin
         document.querySelector(".progress-bar-filler").style.width = "{{widthValue}}%"
