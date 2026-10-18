@@ -220,6 +220,20 @@ h3 {
     padding: 2em;
 }
 
+.logged-sessions .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.looged-sessions .top p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}
+
 .home-page table {
     margin-top: 3em;
 }

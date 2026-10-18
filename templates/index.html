@@ -61,6 +61,10 @@
         <section class="home-page" id="home">
             <h1>Welcome to my Study App</h1>
 
+            <a href="/export" class="export-data">
+                <i class="bx bx-download"></i> Export to CSV
+            </a>
+
             <div class="study-analysis">
                 <p>Total logged hours: <span>{{total_duration}}</span></p>
 
@@ -86,7 +90,12 @@
             </div>
 
             <div class="logged-sessions">
-                <h3>Logged Sessions</h3>
+                <div class="top">
+                    <h3>Logged Sessions</h3>
+                    <p class="filter-btn"><i class="bx bx-menu-filter"></i>History</p>
+
+                    <input type="date" name="date-range" id="date-range" min="" max="">
+                </div>
                 <table class="displayed-sessions">
                     <thead>
                         <th>Session Name</th>
@@ -245,7 +254,7 @@
                 labels: labels,
                 datasets: [{
                     label: 'Hours per day',
-                    data: [5, 4, 5, 4, 3, 2, 6],
+                    data: dataPoints,
                     backgroundColor: [
                         '#571bc1',
                         '#571bc1',

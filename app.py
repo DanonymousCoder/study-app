@@ -1,6 +1,8 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, Response
 import sqlite3
 import os
+import csv
+import io
 from dotenv import load_dotenv
 from datetime import date, datetime, timedelta
 
@@ -26,7 +28,7 @@ def home():
         connection.row_factory = sqlite3.Row
         cursor = connection.cursor()
 
-        cursor.execute("SELECT * FROM sessions")
+        cursor.execute("SELECT * FROM sessions ORDER BY s_date DESC LIMIT 10 OFFSET 0")
 
         rows = cursor.fetchall()
 
@@ -165,3 +167,23 @@ def edit_session(session_id):
             cursor.execute(add_query, (session_title, session_duration, session_date, session_notes, session_id))
 
     return redirect(url_for("home"))
+
+@app.route('/export')
+def export_data():
+    with sqlite3.connect("focus.db") as connection:
+        cursor = connection.cursor()
+
+        cursor.execute("SELECT title, duration, s_date, duration, notes FROM sessions ORDER BY s_date DESC")
+        sessions = cursor.fetchall()
+
+        result = io.StringIO()
+        writer = csv.writer(result)
+
+        writer.writerow(['Session Name', 'Duration (mins)', 'Date', 'Time', 'Notes'])
+        writer.writerows(sessions)
+
+        response = Response(result.getvalue(), mimetype="text/csv")
+
+        response.headers["Content-Disposition"] = "attachment; filename=study_tracker_export.csv"
+
+        return response
