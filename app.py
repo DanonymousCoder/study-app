@@ -16,6 +16,12 @@ fillWeeklyWidth = 0
 @app.route("/")
 def home():
 
+    weekly_data = {}
+
+    for i in range(6, -1, -1):
+        date_string = (date.today() - timedelta(days=i)).strftime("%Y-%m-%d")
+        weekly_data[date_string] = 0
+
     with sqlite3.connect("focus.db") as connection:
         connection.row_factory = sqlite3.Row
         cursor = connection.cursor()
@@ -34,7 +40,7 @@ def home():
         daily_sum_row= cursor.fetchone()
 
         seven_days_ago = (date.today() - timedelta(days=7)).strftime("%Y-%m-%d")
-        cursor.execute("SELECT SUM(duration) AS weekly_total_duration FROM sessions WHERE s_date >= ? or s_date - 7 <= ?", (seven_days_ago, today_date))
+        cursor.execute("SELECT SUM(duration) AS weekly_total_duration FROM sessions WHERE s_date >= ?", (seven_days_ago,))
         weekly_sum_row = cursor.fetchone()
 
         total_daily_duration = daily_sum_row["daily_total_duration"] if daily_sum_row["daily_total_duration"] else 0
@@ -49,6 +55,9 @@ def home():
         target_weekly_hours = cursor.fetchone()[0]
 
 
+        cursor.execute("SELECT s_date, SUM(duration) AS total_day_duration FROM sessions WHERE s_date >= ? GROUP BY s_date ORDER BY s_date ASC", (seven_days_ago,))
+        raw_chart_data = cursor.fetchall()
+
         # calculated hours / inputted hours
         # c/i * 100
         
@@ -61,8 +70,19 @@ def home():
             fillWeeklyWidth = (total_weekly_duration / target_weekly_hours) * 100
         else:
             fillWeeklyWidth = 0
-    
-        return render_template("index.html", sessions=rows, total_duration=total_duration, dailyWidthValue=fillDailyWidth, weeklyWidthValue=fillWeeklyWidth)
+
+        for row in cursor.fetchall():
+            db_date = row[0]
+            db_duration = row[1]
+
+            if db_date in weekly_data:
+                weekly_data[db_date] = db_duration
+
+        chart_dates = [datetime.strptime(date_str, "%Y-%m-%d").strftime("%a") for date_str in  weekly_data.keys()]
+        chart_durations = list(weekly_data.values())
+        
+        return render_template("index.html", sessions=rows, total_duration=total_duration, dailyWidthValue=fillDailyWidth, weeklyWidthValue=fillWeeklyWidth, chart_dates=chart_dates, chart_durations=chart_durations)
+
 
 @app.route("/add", methods=["POST"])
 def add_session():

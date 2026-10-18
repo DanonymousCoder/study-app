@@ -82,7 +82,7 @@
             </div>
 
             <div class="chart-container">
-                <canvas id="myChart"></canvas>
+                <canvas id="myChart" data-dates='{{chart_dates|tojson}}'' data-durations='{{chart_durations|tojson}}'></canvas>
             </div>
 
             <div class="logged-sessions">
@@ -187,6 +187,13 @@
 
         const closeBtns = document.querySelectorAll(".close-btn")
 
+        const ctx = document.getElementById("myChart")
+
+        const labels = JSON.parse(ctx.dataset.dates)
+        const dataPoints = JSON.parse(ctx.dataset.durations)
+
+        console.log(labels)
+
         closeBtns.forEach(elem => {
             elem.addEventListener("click", () => {
                 elem.closest(".alert-div").style.display = "none"
@@ -231,6 +238,34 @@
                 document.getElementById("log-session").submit()
             })
         }
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Hours per day',
+                    data: [5, 4, 5, 4, 3, 2, 6],
+                    backgroundColor: [
+                        '#571bc1',
+                        '#571bc1',
+                        '#571bc1',
+                        '#571bc1',
+                        '#571bc1',
+                        '#571bc1',
+                        '#571bc1'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        })
     </script>
 </body>
 </html>
