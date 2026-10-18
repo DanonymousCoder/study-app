@@ -18,6 +18,13 @@
     <link href="https://cdn.boxicons.com/3.0.8/fonts/brands/boxicons-brands.min.css" rel="stylesheet">
 
 
+    <!-- 
+        chart.js
+    -->
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
     <link rel="stylesheet" href="../static/styles.css">
 </head>
 <body>
@@ -74,6 +81,10 @@
                 </div>
             </div>
 
+            <div class="chart-container">
+                <canvas id="myChart"></canvas>
+            </div>
+
             <div class="logged-sessions">
                 <h3>Logged Sessions</h3>
                 <table class="displayed-sessions">
@@ -91,9 +102,12 @@
                             <td>{{session.s_date}}</td>
                             <td>{{session.duration}}</td>
                             <td>{{session.notes}}</td>
-                            <td>
+                            <td class="action-items">
                                 <form action="/delete/{{session.id}}" method="POST">
                                     <button type="submit"><i class="bx bx-trash" style="color: #94a3b8; font-size: 1.75em;"> </i></button>
+                                </form>
+                                <form action="/edit/{{session.id}}" method="POST" id="edit-session">
+                                    <button type="button" onClick="handleEdit('{{session.id}}','{{session.title}}', '{{session.duration}}', '{{session.s_date}}', '{{session.time}}', '{{session.notes}}')"><i class="bx bx-edit-alt" style="color:#94a3b8;font-size: 1.75em;"></i></button>
                                 </form>
                             </td>
                         </tr>
@@ -199,6 +213,24 @@
             home.style.display ="none"
             goalsPage.style.display = "flex"
         })
+
+
+        function handleEdit(id, title, duration, date, time, notes) {
+            logSession.style.display = "flex"
+            home.style.display = "none"
+            goalsPage.style.display = "none"
+
+            document.querySelector(".log-section #title").value = title
+            document.querySelector(".log-section #duration").value = duration
+            document.querySelector(".log-section #date").value = date
+            document.querySelector(".log-section #time").value = time
+            document.querySelector(".log-section #notes").value = notes
+
+            document.querySelector(".log-section button").addEventListener("click", () => {
+                document.getElementById("log-session").action = "/edit/" + id
+                document.getElementById("log-session").submit()
+            })
+        }
     </script>
 </body>
 </html>

@@ -198,6 +198,11 @@ h3 {
     }
 }
 
+.chart-container {
+    width: 700px;
+    margin: auto;
+}
+
 .home-page table {
     margin-top: 3em;
 }
@@ -314,6 +319,11 @@ h1 {
 
 .log-session .session-duration input {
     width: 430px;
+}
+
+.action-items {
+    display: flex;
+    gap: 1em;
 }
 
 

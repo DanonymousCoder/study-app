@@ -122,3 +122,26 @@ def set_goal():
 
         cursor.execute(add_query, (goal_value,))
     return redirect(request.referrer or url_for("home"))
+
+@app.route("/edit/<int:session_id>", methods=["POST"])
+def edit_session(session_id):
+    session_title = request.form.get("title")
+    session_duration = request.form.get("duration")
+    session_date = request.form.get("date")
+    session_time = request.form.get("time")
+    session_notes = request.form.get("notes")
+
+    if session_date == "":
+        session_date = date.today().isoformat()
+    
+    if session_time == "":
+        now = datetime.now()
+        session_time = now.strftime("%H:%M")
+
+        with sqlite3.connect("focus.db") as connection:
+            cursor = connection.cursor()
+
+            add_query = "UPDATE  sessions SET title = ?, duration = ?, s_date = ?, notes = ?  WHERE id = ?"
+            cursor.execute(add_query, (session_title, session_duration, session_date, session_notes, session_id))
+
+    return redirect(url_for("home"))
