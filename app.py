@@ -57,6 +57,11 @@ def home():
         target_weekly_hours = cursor.fetchone()[0]
 
 
+        cursor.execute("SELECT DISTINCT s_date FROM sessions ORDER BY s_date DESC")
+        streak_data = [row[0] for row in cursor.fetchall()]
+
+        current_streak = calculate_streak(streak_data)
+
         cursor.execute("SELECT s_date, SUM(duration) AS total_day_duration FROM sessions WHERE s_date >= ? GROUP BY s_date ORDER BY s_date ASC", (seven_days_ago,))
         raw_chart_data = cursor.fetchall()
 
@@ -83,7 +88,7 @@ def home():
         chart_dates = [datetime.strptime(date_str, "%Y-%m-%d").strftime("%a") for date_str in  weekly_data.keys()]
         chart_durations = list(weekly_data.values())
         
-        return render_template("index.html", sessions=rows, total_duration=total_duration, dailyWidthValue=fillDailyWidth, weeklyWidthValue=fillWeeklyWidth, chart_dates=chart_dates, chart_durations=chart_durations)
+        return render_template("index.html", sessions=rows, total_duration=total_duration, dailyWidthValue=fillDailyWidth, weeklyWidthValue=fillWeeklyWidth, chart_dates=chart_dates, chart_durations=chart_durations, current_streak=current_streak)
 
 
 @app.route("/add", methods=["POST"])
@@ -187,3 +192,34 @@ def export_data():
         response.headers["Content-Disposition"] = "attachment; filename=study_tracker_export.csv"
 
         return response
+
+
+# function to calculate current streak
+def calculate_streak(streak_data):
+    current_day = datetime.now().date()
+    streak = 0
+    yesterday = current_day - timedelta(days=1)
+
+    dates = [datetime.strptime(d, "%Y-%m-%d") for d in streak_data]
+
+    if not dates:
+        return 0
+
+    if dates[0] == current_day:
+        target_date = current_day
+    elif dates[0] == yesterday:
+        target_date = yesterday
+    else:
+        return 0
+
+    for logged_date in dates:
+        if logged_date == target_date:
+            streak += 1
+
+            target_datr -= timedelta(days=1)
+        else:
+            break
+
+    return streak
+
+    

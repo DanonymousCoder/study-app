@@ -106,6 +106,10 @@ h3 {
     gap: 2em;
 }
 
+.streak-container {
+    background-color: #060e20;
+}
+
 .study-analysis {
     background-color: #0b1326;
     padding: 2em;
