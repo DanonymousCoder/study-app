@@ -94,7 +94,7 @@
                     <h3>Logged Sessions</h3>
                     <p class="filter-btn"><i class="bx bx-menu-filter"></i>History</p>
 
-                    <input type="date" name="date-range" id="date-range" min="" max="">
+                    <input type="date" name="date-range" class="date-range" id="date-range" min="2026-05-01" max="2026-10-29">
                 </div>
                 <table class="displayed-sessions">
                     <thead>
@@ -230,6 +230,17 @@
             goalsPage.style.display = "flex"
         })
 
+        document.querySelector(".filter-btn").addEventListener("click", (event) => {
+            document.querySelector(".date-range").style.display = "block"
+
+            event.stopPropagation()
+        })
+
+        document.addEventListener ("click", (event) => {
+            if (!document.querySelector(".date-range").contains(event.target)) {
+                document.querySelector(".date-range").style.display = "none"
+            }
+        })
 
         function handleEdit(id, title, duration, date, time, notes) {
             logSession.style.display = "flex"

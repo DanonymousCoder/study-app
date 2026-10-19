@@ -220,6 +220,10 @@ h3 {
     padding: 2em;
 }
 
+.logged-sessions {
+    position: relative;
+}
+
 .logged-sessions .top {
     display: flex;
     justify-content: space-between;
@@ -232,6 +236,21 @@ h3 {
     justify-content: center;
     align-items: center;
     gap: 1em;
+}
+
+.filter-btn {
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+.date-range {
+    position: absolute;
+    right: 0;
+    top: 65px;
+    right: 30px;
+    padding: .7em;
+    border-radius: 7px;
+    display: none;
 }
 
 .home-page table {
