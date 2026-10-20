@@ -65,9 +65,9 @@
                 <i class="bx bx-download"></i> Export to CSV
             </a>
 
-            <form action="/import" method="POST">
+            <form action="/import" method="POST" enctype="multipart/form-data" class="import-container">
                 <input type="file" name="csv_file" accept=".csv" required>
-                <button type="submit" class="import-data">
+                <button type="submit" class="import-btn">
                     <i class="bx bx-upload"></i>Import CSV file
                 </button>
             </form>
@@ -110,6 +110,10 @@
 
             <div class="chart-container">
                 <canvas id="myChart" data-dates='{{chart_dates|tojson}}'' data-durations='{{chart_durations|tojson}}'></canvas>
+            </div>
+
+            <div class="courses-chart-container">
+                <canvas id="coursesChart"></canvas>
             </div>
 
             <div class="logged-sessions">
@@ -220,6 +224,7 @@
         const closeBtns = document.querySelectorAll(".close-btn")
 
         const ctx = document.getElementById("myChart")
+        const coursesCtx = document.getElementById("coursesChart")
 
         const labels = JSON.parse(ctx.dataset.dates)
         const dataPoints = JSON.parse(ctx.dataset.durations)

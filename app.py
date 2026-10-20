@@ -66,6 +66,13 @@ def home():
         cursor.execute("SELECT s_date, SUM(duration) AS total_day_duration FROM sessions WHERE s_date >= ? GROUP BY s_date ORDER BY s_date ASC", (seven_days_ago,))
         raw_chart_data = cursor.fetchall()
 
+
+        cursor.execute("SELECT title, SUM(duration) FROM sessions GROUP BY title ORDER BY SUM(duration) DESC")
+        grouped_by_title_data = cursor.fetchall()
+
+        group_titles = [row[0] for row in grouped_by_title_data]
+        group_durations = [row[1] for row in grouped_by_title_data]
+
         # calculated hours / inputted hours
         # c/i * 100
         
@@ -89,7 +96,7 @@ def home():
         chart_dates = [datetime.strptime(date_str, "%Y-%m-%d").strftime("%a") for date_str in  weekly_data.keys()]
         chart_durations = list(weekly_data.values())
         
-        return render_template("index.html", sessions=rows, total_duration=total_duration, dailyWidthValue=fillDailyWidth, weeklyWidthValue=fillWeeklyWidth, chart_dates=chart_dates, chart_durations=chart_durations, current_streak=current_streak)
+        return render_template("index.html", sessions=rows, total_duration=total_duration, dailyWidthValue=fillDailyWidth, weeklyWidthValue=fillWeeklyWidth, chart_dates=chart_dates, chart_durations=chart_durations, current_streak=current_streak, group_titles=group_titles, group_durations=group_durations)
 
 
 @app.route("/add", methods=["POST"])
@@ -204,10 +211,21 @@ def import_data():
     stream = io.StringIO(file.stream.read().decode("UTF8"), newline=None)
     csv_reader = csv.reader(stream)
 
+    next(csv_reader, None)
+
     with sqlite3.connect("focus.db") as connection:
         cursor = connection.cursor()
 
-        cursor.execute("INSERT OR IGNORE")
+        for row in csv_reader:
+            if len(row) == 5:
+                title, duration, s_date, s_time, notes = row
+
+                cursor.execute("SELECT id FROM sessions WHERE title = ? AND s_date = ?", (title, s_date))
+
+                if not cursor.fetchone():
+                    cursor.execute("INSERT INTO sessions (title, s_date, duration, notes) VALUES (?, ?, ?, ?)", (title, s_date, duration, notes))
+
+    return redirect(url_for('home'))
 
 # function to calculate current streak
 def calculate_streak(streak_data):
