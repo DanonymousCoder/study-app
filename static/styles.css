@@ -107,7 +107,14 @@ h3 {
 }
 
 .streak-container {
-    background-color: #060e20;
+    background-color: #0b1326;
+    padding: 2em;
+    width: 800px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
 }
 
 .study-analysis {

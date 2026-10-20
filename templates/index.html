@@ -65,6 +65,13 @@
                 <i class="bx bx-download"></i> Export to CSV
             </a>
 
+            <form action="/import" method="POST">
+                <input type="file" name="csv_file" accept=".csv" required>
+                <button type="submit" class="import-data">
+                    <i class="bx bx-upload"></i>Import CSV file
+                </button>
+            </form>
+
             <div class="study-analysis">
                 <p>Total logged hours: <span>{{total_duration}}</span></p>
 
@@ -86,8 +93,19 @@
             </div>
 
             <div class="streak-container">
-                <i class="bx bxs-flame"></i>
-                <span>{{current_streak}} Day Streak</span>
+                <div class="left">
+                    <i class="bx bxs-flame"></i>
+                    <span>{{current_streak}} Day Streak</span>
+                </div>
+                <div class="right">
+                    <div class="visual-streak">
+
+                    </div>
+                    <div class="text">
+                        <p>Active</p>
+                        <p>% Consistency</p>
+                    </div>
+                </div>
             </div>
 
             <div class="chart-container">

@@ -1,10 +1,11 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, Response
+from flask import Flask, render_template, request, redirect, url_for, flash, Response, jsonify
 import sqlite3
 import os
 import csv
 import io
 from dotenv import load_dotenv
 from datetime import date, datetime, timedelta
+from werkzeug.utils import secure_filename
 
 load_dotenv()
 
@@ -193,6 +194,20 @@ def export_data():
 
         return response
 
+@app.route("/import", methods=['POST'])
+def import_data():
+    file = request.files.get("csv_file")
+
+    if not file or not file.filename.endswith('.csv'):
+        return redirect(url_for('home'))
+
+    stream = io.StringIO(file.stream.read().decode("UTF8"), newline=None)
+    csv_reader = csv.reader(stream)
+
+    with sqlite3.connect("focus.db") as connection:
+        cursor = connection.cursor()
+
+        cursor.execute("INSERT OR IGNORE")
 
 # function to calculate current streak
 def calculate_streak(streak_data):
