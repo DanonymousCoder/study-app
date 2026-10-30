@@ -133,9 +133,33 @@ h3 {
     width: 800px;
     border-radius: 15px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 1em;
+}
+
+.streak-container .right {
+    display: flex;
+    align-items: center;
+    gap: 2em;
+}
+
+.streak-container .visual-streak {
+    display: flex;
+    gap: 1em;
+}
+
+.visual-streak p {
+    background-color: #571bc1;
+    padding: 1em;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.visual-streak p.active {
+    background-color: #160436;
+    border: 1px solid white;
 }
 
 .study-analysis {
@@ -244,12 +268,27 @@ h3 {
     }
 }
 
+.charts {
+    display: flex;
+    align-items: stretch;
+    gap: 2em;
+}
+
 .chart-container {
     width: 900px;
     margin: auto;
     background-color: #0b1326;
     border-radius: 15px;
     padding: 2em;
+}
+
+.courses-chart-container {
+    background-color: #0b1326;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 4em;
+    border-radius: 15px;
 }
 
 .logged-sessions {

@@ -86,7 +86,7 @@ def home():
         else:
             fillWeeklyWidth = 0
 
-        for row in cursor.fetchall():
+        for row in raw_chart_data:
             db_date = row[0]
             db_duration = row[1]
 
@@ -249,7 +249,7 @@ def calculate_streak(streak_data):
         if logged_date == target_date:
             streak += 1
 
-            target_datr -= timedelta(days=1)
+            target_date -= timedelta(days=1)
         else:
             break
 

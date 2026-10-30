@@ -99,7 +99,9 @@
                 </div>
                 <div class="right">
                     <div class="visual-streak">
-
+                        <p class="active">1</p>
+                        <p>2</p>
+                        <p>3</p>
                     </div>
                     <div class="text">
                         <p>Active</p>
@@ -108,12 +110,14 @@
                 </div>
             </div>
 
-            <div class="chart-container">
-                <canvas id="myChart" data-dates='{{chart_dates|tojson}}'' data-durations='{{chart_durations|tojson}}'></canvas>
-            </div>
+            <div class="charts">
+                <div class="chart-container">
+                    <canvas id="myChart" data-dates='{{chart_dates|tojson}}'' data-durations='{{chart_durations|tojson}}'></canvas>
+                </div>
 
-            <div class="courses-chart-container">
-                <canvas id="coursesChart"></canvas>
+                <div class="courses-chart-container">
+                    <canvas id="coursesChart" data-titles='{{group_titles|tojson|safe}}' data-durations='{{group_durations|tojson|safe}}'></canvas>
+                </div>
             </div>
 
             <div class="logged-sessions">
@@ -224,12 +228,15 @@
         const closeBtns = document.querySelectorAll(".close-btn")
 
         const ctx = document.getElementById("myChart")
-        const coursesCtx = document.getElementById("coursesChart")
+        const coursesCanvas = document.getElementById("coursesChart")
+        const coursesCtx = coursesCanvas.getContext("2d")
 
         const labels = JSON.parse(ctx.dataset.dates)
-        const dataPoints = JSON.parse(ctx.dataset.durations)
+        const dataPoints = JSON.parse(coursesCanvas.dataset.durations)
+        const groupTitles = JSON.parse(coursesCanvas.dataset.titles)
+        const groupDurations = JSON.parse(coursesCanvas.dataset.durations)
 
-        console.log(labels)
+        // console.log(labels)
 
         closeBtns.forEach(elem => {
             elem.addEventListener("click", () => {
@@ -237,8 +244,6 @@
             })
         })
 
-        // Apparently this was the bug preventing this feature from workin
-        document.querySelector(".progress-bar-filler").style.width = "{{widthValue}}%"
 
         homeBtn.addEventListener("click", () => {
             logSession.style.display = "none"
@@ -287,6 +292,11 @@
             })
         }
 
+        const dynamicColors = groupTitles.map((title, index) => {
+            const hue = (index * 360) / groupTitles.length
+            return `hsl(${hue}, 60%, 70%)`
+        })
+
         new Chart(ctx, {
             type: 'bar',
             data: {
@@ -310,6 +320,31 @@
                 scales: {
                     y: {
                         beginAtZero: true
+                    }
+                }
+            }
+        })
+
+        const coursesCtxChart = new Chart(coursesCtx, {
+            type: 'doughnut',
+            data: {
+                labels: groupTitles,
+                datasets: [{
+                    label: 'Total Minutes',
+                    data: groupDurations,
+                    backgroundColor: dynamicColors,
+                    borderColor: '#060e20',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: '#ffffff'
+                        }
                     }
                 }
             }
